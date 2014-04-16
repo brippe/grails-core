@@ -162,6 +162,10 @@ public class GrailsScriptRunner {
             if (build.getRootLoader() == null) {
                 build.setRootLoader((URLClassLoader) GrailsScriptRunner.class.getClassLoader());
             }
+            //TODO:
+            if(commandLine.hasJavacNonStandardOptions()) {
+                build.setJavacNonStandardOptions(commandLine.getJavacNonStandardOptions());
+            }
         }
         catch (Exception e) {
             exitWithError("An error occurred loading the grails-app/conf/BuildConfig.groovy file: " + e.getMessage(), null);

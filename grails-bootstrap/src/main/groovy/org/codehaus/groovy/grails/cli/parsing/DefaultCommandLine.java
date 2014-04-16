@@ -34,10 +34,11 @@ public class DefaultCommandLine implements CommandLine {
     Properties systemProperties = new Properties();
     Map<String, Object> undeclaredOptions = new HashMap<String, Object>();
     Map<String, SpecifiedOption> declaredOptions = new HashMap<String, SpecifiedOption>();
+    List<String> javacNonStandardOptions = new ArrayList<String>();
     List<String> remainingArgs = new ArrayList<String>();
     private String environment;
     private String commandName;
-
+    
     public void addDeclaredOption(String name, Option option) {
         addDeclaredOption(name, option, Boolean.TRUE);
     }
@@ -56,6 +57,10 @@ public class DefaultCommandLine implements CommandLine {
         so.value = value;
 
         declaredOptions.put(name, so);
+    }
+    
+    public void addJavacNonStandardOption(String option) {
+        javacNonStandardOptions.add(option);
     }
 
     public void setEnvironment(String environment) {
@@ -123,6 +128,14 @@ public class DefaultCommandLine implements CommandLine {
 
     public boolean hasOption(String name) {
         return declaredOptions.containsKey(name) || undeclaredOptions.containsKey(name);
+    }
+    
+    public boolean hasJavacNonStandardOptions() {
+        return javacNonStandardOptions.size() > 0;
+    }
+    
+    public List<String> getJavacNonStandardOptions() {
+        return javacNonStandardOptions;
     }
 
     public Object optionValue(String name) {

@@ -100,7 +100,6 @@ class GrailsProjectCompiler extends BaseSettingsApi{
             javaOptions.source = buildSettings.compilerSourceLevel
         }
         javaOptions.target = buildSettings.compilerTargetLevel
-
     }
 
     private initializeSrcDirectories() {
@@ -282,7 +281,12 @@ class GrailsProjectCompiler extends BaseSettingsApi{
                }
             }
             javac(javaOptions) {
-                compilerarg value:"-Xlint:-options"
+                if(buildSettings.javacNonStandardOptions.size() == 0) {
+                    compilerarg value:"-Xlint:-options"
+                }
+                else {
+                    compilerarg value:buildSettings.getJavacNonStandardOptions()
+                }
             }
         }
 
@@ -390,7 +394,12 @@ class GrailsProjectCompiler extends BaseSettingsApi{
                 exclude(name: "**/UrlMappings.groovy")
                 exclude(name: "**/resources.groovy")
                 javac(javaOptions) {
-                    compilerarg value:"-Xlint:-options"
+                    if(buildSettings.javacNonStandardOptions.size() == 0) {
+                        compilerarg value:"-Xlint:-options"
+                    }
+                    else {
+                        compilerarg value:buildSettings.getJavacNonStandardOptions()
+                    }
                 }
             }
         }

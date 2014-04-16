@@ -455,6 +455,21 @@ class BuildSettings extends AbstractBuildSettings {
     boolean logScriptTiming = false
 
     GrailsCoreDependencies coreDependencies
+    
+    /**
+     * A list of javac non-standard options: -Xlint, -Xlint:deprecation, -Xlint:unchecked
+     */
+    List<String> javacNonStandardOptions = []
+    
+    /**
+     * @return all the non-standard javac options
+     */
+    String getJavacNonStandardOptions() {
+        StringBuffer optsToString = new StringBuffer() 
+        javacNonStandardOptions.each { optsToString <<  it << " " }
+        //println optsToString
+        return optsToString
+    }
 
     private List<File> compileDependencies = []
     private boolean defaultCompileDepsAdded = false

@@ -180,8 +180,13 @@ public class CommandLineParser {
             return;
         }
 
+        if(arg.startsWith("-X")) {
+            processJavacNonStandardOptions(cl, arg);
+            return;
+        }
+        
         arg = (arg.charAt(1) == '-' ? arg.substring(2, arg.length()) : arg.substring(1, arg.length())).trim();
-
+        
         if (arg.contains("=")) {
             String[] split = arg.split("=");
             String name = split[0].trim();
@@ -214,5 +219,18 @@ public class CommandLineParser {
         String name = arg.substring(2, i);
         String value = arg.substring(i+1,arg.length());
         cl.addSystemProperty(name, value);
+    }
+    
+    protected void processJavacNonStandardOptions(DefaultCommandLine cl, String arg) {
+        int i = arg.indexOf(" ");
+        String option = null;
+        
+        if(i != -1) {
+            option = arg.substring(0, i);
+        }
+        else {
+            option = arg.substring(0);
+        }
+        cl.addJavacNonStandardOption(option);
     }
 }

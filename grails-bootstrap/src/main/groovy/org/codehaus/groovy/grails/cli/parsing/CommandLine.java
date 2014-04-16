@@ -80,6 +80,16 @@ public interface CommandLine {
      * @return The value
      */
     Object optionValue(String name);
+    
+    /**
+     * @return whether any javac non-standard options have been specified
+     */
+    boolean hasJavacNonStandardOptions();
+    
+    /**
+     * @return javac non-standard options
+     */
+    List<String> getJavacNonStandardOptions();
 
     /**
      * @return The remaining args as one big string
